@@ -14,24 +14,25 @@ class LoginController extends GetxController {
     ans.value = !ans.value;
   }
 
-  login(String mobile, String password) async {
+  login(String mobile) async {
     int code = 0;
     try {
-      String app = await SmsAutoFill().getAppSignature;
-      print(app);
+      /*String app = await SmsAutoFill().getAppSignature;
+      print(app);*/
       Response response;
-      response = await Dio().post(Services.login, queryParameters: {
-        'appsingnature': app,
+      response = await Dio().post(Services.vendorRegister, queryParameters: {
+        /*'appsingnature': app,
         'phone': mobile,
-        'password': password
+        'password': password*/
+        'number' : mobile
       });
       if (response.statusCode == 200) {
-        Otp_Info info = Otp_Info.fromMap(response.data);
+        // Otp_Info info = Otp_Info.fromMap(response.data);
         //**
         //**store captain id in root userinfo model */
         // */
-        KeepuserInfromation.captain_id = info.captainId.toString();
-        KeepuserInfromation.otp_message = info.message.toString();
+        // KeepuserInfromation.captain_id = info.captainId.toString();
+        // KeepuserInfromation.otp_message = info.message.toString();
         code = response.statusCode!;
       }
     } catch (e) {

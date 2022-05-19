@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable, prefer_const_constructors_in_immutables, unused_field, non_constant_identifier_names, unused_local_variable, await_only_futures, avoid_print
 
 import 'package:anchor_vendor/Appcolor.dart';
+import 'package:anchor_vendor/Model/keepUserInformation.dart';
 import 'package:anchor_vendor/media_query.dart';
 import 'package:anchor_vendor/screen/Otp/Otpui.dart';
 import 'package:anchor_vendor/screen/login/controller/controller.dart';
@@ -20,11 +21,13 @@ LoginController loginController = Get.put(LoginController());
 class Login extends StatelessWidget {
   Login({Key? key}) : super(key: key);
   static const name = 'login';
+
   //
   // controller for password view off/on
   Locale? _locale;
 
   final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -72,21 +75,21 @@ class Login extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 8.0),
                     child: InkWell(
                       onTap: () async {
-                        Navigator.pushNamed(context, Otpui.name);
-                        // add operation which u want
-                        // if (formKey.currentState!.validate()) {
-                        //   // formKey.currentState.save();
-                        //   int code = await loginController.login(
-                        //       mobile_number.text.toString(),
-                        //       password.text.toString());
-                        //   if (code == 200) {
-                        //     print('Login code 200');
-                        //   //   var signature =
-                        //   //  // await SmsAutoFill().unregisterListener();
-                        //   //   print(signature);
-                        //     Navigator.pushNamed(context, Otpui.name);
-                        //   }
-                        // }
+                        //Navigator.pushNamed(context, Otpui.name);
+                        //add operation which u want
+                        if (formKey.currentState!.validate()) {
+                          //formKey.currentState.save();
+                          int code = await loginController
+                              .login(mobile_number.text.toString());
+                          if (code == 200) {
+                            print('Login code 200');
+                            /*var signature =
+                            await SmsAutoFill().unregisterListener();
+                            print(signature);*/
+                            KeepuserInfromation.phone = mobile_number.text.toString();
+                            Navigator.pushNamed(context, Otpui.name);
+                          }
+                        }
                       },
                       child: Container(
                         width: MediaQuerypage.screenWidth,
@@ -169,7 +172,7 @@ Padding loginBody() {
           child: TextFormField(
             controller: mobile_number,
             validator: (value) {
-              if (mobile_number.text.toString().length > 11) {
+              if (mobile_number.text.toString().length < 11) {
                 return 'Enter your mobile number';
               }
             },
@@ -190,7 +193,7 @@ Padding loginBody() {
             ),
           ),
         ),
-        Padding(
+        /*Padding(
           padding: EdgeInsets.only(
             top: MediaQuerypage.screenHeight! * 0.01,
           ),
@@ -275,7 +278,7 @@ Padding loginBody() {
               ),
             ),
           ),
-        ),
+        ),*/
       ],
     ),
   );

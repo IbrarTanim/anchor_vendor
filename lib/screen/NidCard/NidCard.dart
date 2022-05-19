@@ -3,10 +3,15 @@
 import 'package:anchor_vendor/Appcolor.dart';
 import 'package:anchor_vendor/TextStyle.dart';
 import 'package:anchor_vendor/media_query.dart';
+import 'package:anchor_vendor/screen/NidCard/controller/nidController.dart';
 import 'package:anchor_vendor/screen/license/License.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../appbar.dart';
 import 'component/NidBody.dart';
+
+// controller for tabber view
+NidController nidController = Get.put(NidController());
 
 class NidCard extends StatelessWidget {
   const NidCard({Key? key}) : super(key: key);
@@ -28,9 +33,16 @@ class NidCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: InkWell(
-              onTap: () {
+              onTap: () async {
                 // add operation which u want
-                Navigator.pushNamed(context, License.name);
+                if(nidController.isFrontTaken.value && nidController.isBackTaken.value){
+                  int responseCode = await nidController.uploadFiles();
+                  if(responseCode == 200){
+                    Navigator.pushNamed(context, License.name);
+                  }
+                }else{
+                  print(nidController.isFrontTaken.value);
+                }
               },
               child: Container(
                 width: MediaQuerypage.screenWidth,

@@ -1,13 +1,19 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_import, file_names, annotate_overrides, overridden_fields
 
 import 'package:anchor_vendor/Appcolor.dart';
+import 'package:anchor_vendor/Model/keepUserInformation.dart';
 import 'package:anchor_vendor/screen/NidCard/NidCard.dart';
+import 'package:anchor_vendor/screen/Otp/controller/otp_controller.dart';
 import 'package:anchor_vendor/screen/registation/registation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import '../../TextStyle.dart';
 import '../../media_query.dart';
+
+
+OTPController otpController = Get.put(OTPController());
 
 class Otpui extends StatefulWidget {
   Otpui({Key? key}) : super(key: key);
@@ -88,9 +94,14 @@ class _OtpuiState extends State<Otpui> with CodeAutoFill {
                       Color(0xFFECF2FE), Color(0xFFECF2FE))),
               currentCode: otpCode,
               codeLength: 6,
-              onCodeChanged: (code) {
+              onCodeChanged: (code) async {
                 if (code!.length == 6) {
-                  Navigator.pushNamed(context, Ragistation.name);
+                  //TODO
+                  int responseCode = await otpController.register(
+                      KeepuserInfromation.phone, code);
+                  if (responseCode == 200) {
+                    Navigator.pushNamed(context, NidCard.name);
+                  }
                 }
               },
             ),

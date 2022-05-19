@@ -3,6 +3,9 @@
 import 'package:image_picker/image_picker.dart';
 
 class KeepuserInfromation {
+
+  static String auth_token = '';
+
   static String captain_id = '';
   static String otp_message = '';
   static String user_name = '';

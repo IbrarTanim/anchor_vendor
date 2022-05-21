@@ -5,9 +5,16 @@ import 'package:anchor_vendor/TextStyle.dart';
 import 'package:anchor_vendor/media_query.dart';
 import 'package:anchor_vendor/screen/create%20new%20trip/Model/itemsName.dart';
 import 'package:anchor_vendor/screen/create%20new%20trip/component/seconddialog.dart';
+import 'package:anchor_vendor/screen/create%20new%20trip/controller/products_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+
+ProductsController productsController = ProductsController();
 
 showaDialog(BuildContext context) {
+  //fetch data
+  productsController.fetchProductData();
+
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -28,8 +35,8 @@ showaDialog(BuildContext context) {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: MediaQuerypage.safeBlockVertical! * 2,
-                    ),
+                  vertical: MediaQuerypage.safeBlockVertical! * 2,
+                ),
                 child: Text('Help us to give you better service',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -43,45 +50,44 @@ showaDialog(BuildContext context) {
                   suffixIcon: Icon(Icons.search),
                 ),
               ),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: itemList_With_name.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      leading: Text((index + 1).toString()),
-                      title: Text(itemList_With_name[index]),
-                      trailing: Checkbox(
-                        checkColor: Colors.white,
-                        activeColor: Appcolor.lightBlue,
-                        value: true,
-                        onChanged: (value) {
-
+              Obx(() => productsController.isUpdated.value
+                  ? Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: productsController.datum.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            leading: Text((index + 1).toString()),
+                            title: Text(productsController.datum[index].name),
+                            trailing: Checkbox(
+                              checkColor: Colors.white,
+                              activeColor: Appcolor.lightBlue,
+                              value: false,
+                              onChanged: (value) {},
+                            ),
+                          );
                         },
                       ),
-                    );
-                  },
+                    )
+                  : SizedBox(height: 100.0,)),
+              InkWell(
+                onTap: () async {
+                  secondshowaDialog(context);
+                },
+                child: Container(
+                  height: MediaQuerypage.screenHeight! / 18,
+                  decoration: BoxDecoration(
+                    color: Appcolor.lightBlue,
+                    //border: Border.all(color: Color(0xFFB1B1B1)),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),
+                  child: Center(
+                      child: Text(
+                    'Next',
+                    style: Textstyle.botton,
+                  )),
                 ),
               ),
-              InkWell(
-                    onTap: () async {
-                      secondshowaDialog(context);
-                    },
-                    child: Container(
-                      height: MediaQuerypage.screenHeight! / 18,
-                      decoration: BoxDecoration(
-                        color:Appcolor.lightBlue,
-                        //border: Border.all(color: Color(0xFFB1B1B1)),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      child: Center(
-                          child: Text(
-                        'Next',
-                        style: Textstyle.botton,
-                      )),
-                    ),
-                  ),
-
             ],
           ),
         ),

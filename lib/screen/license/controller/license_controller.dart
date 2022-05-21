@@ -27,7 +27,7 @@ class LicenseController extends GetxController {
       //dio.options.headers["Authorization"] = "Bearer ${KeepuserInfromation.auth_token}";
       Response response;
       var formData = FormData.fromMap({
-        'license': MultipartFile.fromFile(licenseImageFile.value,
+        'license': await MultipartFile.fromFile(licenseImageFile.value,
             filename: licenseImageFileName.value,
             contentType: MediaType('image', 'png'))
       });

@@ -27,7 +27,7 @@ class ChequeBookController extends GetxController {
       //dio.options.headers["Authorization"] = "Bearer ${KeepuserInfromation.auth_token}";
       Response response;
       var formData = FormData.fromMap({
-        'license': MultipartFile.fromFile(chequeImageFile.value,
+        'cheque': await MultipartFile.fromFile(chequeImageFile.value,
             filename: chequeImageFileName.value,
             contentType: MediaType('image', 'png'))
       });

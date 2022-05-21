@@ -3,6 +3,7 @@
 import 'package:anchor_vendor/Appcolor.dart';
 import 'package:anchor_vendor/TextStyle.dart';
 import 'package:anchor_vendor/media_query.dart';
+import 'package:anchor_vendor/screen/updateProfile/update_profile_ui.dart';
 import 'package:anchor_vendor/screen/userInfromation/controller/user_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -26,12 +27,14 @@ class UserInformation extends StatelessWidget {
           elevation: 0.0,
           actions: <Widget>[
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, UpdateProfile.name);
+              },
               child: Text("Edit"),
               style: ButtonStyle(
-                textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
-                foregroundColor: MaterialStateProperty.all(Colors.black)
-              ),
+                  textStyle: MaterialStateProperty.all(
+                      TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
+                  foregroundColor: MaterialStateProperty.all(Colors.black)),
             ),
           ],
         ),
@@ -55,7 +58,14 @@ class UserInformation extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         height: MediaQuerypage.screenHeight! * 0.05,
                         width: MediaQuerypage.screenWidth,
-                        child: Text('Name: '),
+                        child: Obx(() => userController.isUpdated.value
+                            ? userController.data.name != null &&
+                                    userController.data.name
+                                        .toString()
+                                        .isNotEmpty
+                                ? Text("Name: " + userController.data.name)
+                                : Text('Name: ')
+                            : Text('Name: ')),
                       ),
                     ),
                     Card(
@@ -101,7 +111,8 @@ class UserInformation extends StatelessWidget {
                     ),*/
                     Padding(
                       padding: EdgeInsets.only(
-                          top: 20.0, left: MediaQuerypage.safeBlockHorizontal! * 2),
+                          top: 20.0,
+                          left: MediaQuerypage.safeBlockHorizontal! * 2),
                       child: Text(
                         'Nid Front Part',
                         style: Textstyle.userinfromation_imageheader,
@@ -113,20 +124,23 @@ class UserInformation extends StatelessWidget {
                                     .toString()
                                     .isNotEmpty
                             ? Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Image.network(userController.data.nidFront),
-                            )
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child:
+                                    Image.network(userController.data.nidFront),
+                              )
                             : Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Image(image: AssetImage('assets/nid.jpg')),
-                            )
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child:
+                                    Image(image: AssetImage('assets/nid.jpg')),
+                              )
                         : Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Image(image: AssetImage('assets/nid.jpg')),
-                        )),
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Image(image: AssetImage('assets/nid.jpg')),
+                          )),
                     Padding(
                       padding: EdgeInsets.only(
-                          top: 20, left: MediaQuerypage.safeBlockHorizontal! * 2),
+                          top: 20,
+                          left: MediaQuerypage.safeBlockHorizontal! * 2),
                       child: Text(
                         'Nid Back Part',
                         style: Textstyle.userinfromation_imageheader,
@@ -134,24 +148,27 @@ class UserInformation extends StatelessWidget {
                     ),
                     Obx(() => userController.isUpdated.value
                         ? userController.data.nidBack != null &&
-                        userController.data.nidBack
-                            .toString()
-                            .isNotEmpty
-                        ? Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Image.network(userController.data.nidBack),
-                        )
+                                userController.data.nidBack
+                                    .toString()
+                                    .isNotEmpty
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child:
+                                    Image.network(userController.data.nidBack),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child:
+                                    Image(image: AssetImage('assets/nid.jpg')),
+                              )
                         : Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Image(image: AssetImage('assets/nid.jpg')),
-                        )
-                        : Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Image(image: AssetImage('assets/nid.jpg')),
-                        )),
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Image(image: AssetImage('assets/nid.jpg')),
+                          )),
                     Padding(
                       padding: EdgeInsets.only(
-                          top: 20, left: MediaQuerypage.safeBlockHorizontal! * 2),
+                          top: 20,
+                          left: MediaQuerypage.safeBlockHorizontal! * 2),
                       child: Text(
                         'Licece Part',
                         style: Textstyle.userinfromation_imageheader,
@@ -159,24 +176,27 @@ class UserInformation extends StatelessWidget {
                     ),
                     Obx(() => userController.isUpdated.value
                         ? userController.data.license != null &&
-                        userController.data.license
-                            .toString()
-                            .isNotEmpty
-                        ? Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Image.network(userController.data.license),
-                        )
+                                userController.data.license
+                                    .toString()
+                                    .isNotEmpty
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child:
+                                    Image.network(userController.data.license),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child:
+                                    Image(image: AssetImage('assets/nid.jpg')),
+                              )
                         : Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Image(image: AssetImage('assets/nid.jpg')),
-                        )
-                        : Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Image(image: AssetImage('assets/nid.jpg')),
-                        )),
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Image(image: AssetImage('assets/nid.jpg')),
+                          )),
                     Padding(
                       padding: EdgeInsets.only(
-                          top: 20, left: MediaQuerypage.safeBlockHorizontal! * 2),
+                          top: 20,
+                          left: MediaQuerypage.safeBlockHorizontal! * 2),
                       child: Text(
                         'Cheque Part',
                         style: Textstyle.userinfromation_imageheader,
@@ -184,21 +204,21 @@ class UserInformation extends StatelessWidget {
                     ),
                     Obx(() => userController.isUpdated.value
                         ? userController.data.cheque != null &&
-                        userController.data.cheque
-                            .toString()
-                            .isNotEmpty
-                        ? Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Image.network(userController.data.cheque),
-                    )
+                                userController.data.cheque.toString().isNotEmpty
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child:
+                                    Image.network(userController.data.cheque),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child:
+                                    Image(image: AssetImage('assets/nid.jpg')),
+                              )
                         : Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Image(image: AssetImage('assets/nid.jpg')),
-                    )
-                        : Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Image(image: AssetImage('assets/nid.jpg')),
-                    )),
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Image(image: AssetImage('assets/nid.jpg')),
+                          )),
                   ],
                 ),
               ),

@@ -29,6 +29,7 @@ import 'package:anchor_vendor/screen/tracking/Tracking.dart';
 import 'package:anchor_vendor/screen/tracking/view.dart';
 import 'package:anchor_vendor/screen/trackingvoyage/Tracking_voyage.dart';
 import 'package:anchor_vendor/screen/trip/trip.dart';
+import 'package:anchor_vendor/screen/updateProfile/update_profile_ui.dart';
 import 'package:anchor_vendor/screen/userInfromation/UserInformation.dart';
 import 'package:anchor_vendor/screen/voyage/Voyage.dart';
 import 'package:anchor_vendor/screen/voyage/voyage_specification.dart';
@@ -59,7 +60,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home:  MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: UserInformation(),
       routes: {
         Login.name: (context) => Login(),
         Ragistation.name: (context) => Ragistation(),
@@ -92,8 +94,9 @@ class MyApp extends StatelessWidget {
         View.name: (context) => View(),
         RunningTrip.name: (context) => RunningTrip(),
         PaymentStatus.name: (context) => PaymentStatus(),
-        TripHistoy.name:(context)=>TripHistoy(),
-        ShipInfomation.name:(context)=>ShipInfomation(),
+        TripHistoy.name: (context) => TripHistoy(),
+        ShipInfomation.name: (context) => ShipInfomation(),
+        UpdateProfile.name: (context) => UpdateProfile()
       },
     );
   }

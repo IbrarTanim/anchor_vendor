@@ -134,7 +134,7 @@ class NewDashboard extends StatelessWidget {
                 ),
               ],
             )),
-        bottomNavigationBar: newDashboard_bottomNavigationbar(),
+        //bottomNavigationBar: newDashboard_bottomNavigationbar(),
       ),
     ));
   }

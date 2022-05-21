@@ -6,16 +6,16 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http_parser/http_parser.dart';
 
-class LicenseController extends GetxController {
-  var licenseImageFile = ''.obs;
-  var licenseImageFileName = ''.obs;
+class ChequeBookController extends GetxController {
+  var chequeImageFile = ''.obs;
+  var chequeImageFileName = ''.obs;
 
   //Open gallery
-  licenseImageCapture() async {
+  chequeImageCapture() async {
     final XFile? image =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    licenseImageFile.value = image!.path;
-    licenseImageFileName.value = image.name;
+    chequeImageFile.value = image!.path;
+    chequeImageFileName.value = image.name;
   }
 
   //upload files to server
@@ -27,8 +27,8 @@ class LicenseController extends GetxController {
       //dio.options.headers["Authorization"] = "Bearer ${KeepuserInfromation.auth_token}";
       Response response;
       var formData = FormData.fromMap({
-        'license': MultipartFile.fromFile(licenseImageFile.value,
-            filename: licenseImageFileName.value,
+        'license': MultipartFile.fromFile(chequeImageFile.value,
+            filename: chequeImageFileName.value,
             contentType: MediaType('image', 'png'))
       });
       response = await dio.post(

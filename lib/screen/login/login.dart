@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable, prefer_const_constructors_in_immutables, unused_field, non_constant_identifier_names, unused_local_variable, await_only_futures, avoid_print
 
+import 'dart:ui';
+
 import 'package:anchor_vendor/Appcolor.dart';
 import 'package:anchor_vendor/Model/keepUserInformation.dart';
 import 'package:anchor_vendor/media_query.dart';
 import 'package:anchor_vendor/screen/Otp/Otpui.dart';
 import 'package:anchor_vendor/screen/login/controller/controller.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
@@ -60,74 +63,110 @@ class Login extends StatelessWidget {
             //MyApp.of(context).setLocale(Locale.fromSubtags(languageCode: 'en')),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Form(
-            key: formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
+        body: Obx(() => loginController.isLoading.value
+            ? Center(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  loginBody(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: InkWell(
-                      onTap: () async {
-                        //Navigator.pushNamed(context, Otpui.name);
-                        //add operation which u want
-                        if (formKey.currentState!.validate()) {
-                          //formKey.currentState.save();
-                          int code = await loginController
-                              .login(mobile_number.text.toString());
-                          if (code == 200) {
-                            print('Login code 200');
-                            /*var signature =
-                            await SmsAutoFill().unregisterListener();
-                            print(signature);*/
-                            KeepuserInfromation.phone = mobile_number.text.toString();
-                            Navigator.pushNamed(context, Otpui.name);
-                          }
-                        }
-                      },
-                      child: Container(
-                        width: MediaQuerypage.screenWidth,
-                        height: MediaQuerypage.screenHeight! / 16,
-                        decoration: BoxDecoration(
-                          color: Appcolor.lightBlue,
-                          //border: Border.all(color: Color(0xFFB1B1B1)),
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
-                        child: Center(
-                            child: Text(
-                          'Next',
-                          style: Textstyle.botton,
-                        )),
-                      ),
-                    ),
+                  CircularProgressIndicator(
+                    color: Appcolor.lightBlue,
                   ),
                   SizedBox(
-                    height: MediaQuerypage.screenHeight! * 0.01,
+                    height: 8.0,
                   ),
-                  Row(
-                    children: [
-                      Checkbox(
-                        checkColor: Colors.white,
-                        activeColor: Appcolor.lightBlue,
-                        value: true,
-                        onChanged: (value) {},
-                      ),
-                      Expanded(
-                          child: Text(
-                              'রেজিস্টার সফল ভাবে সম্পন্ন করতে আপনার মোবাইল, এন-আইডি,ট্রেড লাইসেন্স, চেক বইয়ের পাতা ও ই-টিন সঙ্গে রাখুন।'))
-                    ],
+                  Text(
+                    "Please Wait..",
+                    style: TextStyle(
+                        color: Appcolor.grey,
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.bold),
                   )
                 ],
-              ),
-            ),
-          ),
-        ),
+              ))
+            : SingleChildScrollView(
+                child: Form(
+                  key: formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 32.0, horizontal: 8.0),
+                    child: Column(
+                      children: [
+                        loginBody(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: InkWell(
+                            onTap: () async {
+                              //Navigator.pushNamed(context, Otpui.name);
+                              //add operation which u want
+                              if (formKey.currentState!.validate()) {
+                                //show progress
+                                loginController.changeLoadingStatus();
+                                //formKey.currentState.save();
+                                int code = await loginController
+                                    .login(mobile_number.text.toString());
+                                if (code == 200) {
+                                  print('Login code 200');
+                                  loginController.changeLoadingStatus();
+                                  /*var signature =
+                              await SmsAutoFill().unregisterListener();
+                              print(signature);*/
+
+                                  KeepuserInfromation.phone =
+                                      mobile_number.text.toString();
+                                  Navigator.pushNamed(context, Otpui.name);
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "Please provide a valid number.",
+                                      textColor: Colors.black,
+                                      backgroundColor: Colors.lightBlue,
+                                      gravity: ToastGravity.BOTTOM,
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      fontSize: 16.0);
+                                  loginController.changeLoadingStatus();
+                                }
+                              }
+                            },
+                            child: Container(
+                              width: MediaQuerypage.screenWidth,
+                              height: MediaQuerypage.screenHeight! / 16,
+                              decoration: BoxDecoration(
+                                color: Appcolor.lightBlue,
+                                //border: Border.all(color: Color(0xFFB1B1B1)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0)),
+                              ),
+                              child: Center(
+                                  child: Text(
+                                'Next',
+                                style: Textstyle.botton,
+                              )),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuerypage.screenHeight! * 0.01,
+                        ),
+                        Row(
+                          children: [
+                            Checkbox(
+                              checkColor: Colors.white,
+                              activeColor: Appcolor.lightBlue,
+                              value: true,
+                              onChanged: (value) {},
+                            ),
+                            Expanded(
+                                child: Text(
+                                    'রেজিস্টার সফল ভাবে সম্পন্ন করতে আপনার মোবাইল, এন-আইডি,ট্রেড লাইসেন্স, চেক বইয়ের পাতা ও ই-টিন সঙ্গে রাখুন।'))
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )),
       ),
     );
   }

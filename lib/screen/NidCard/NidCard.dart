@@ -6,6 +6,7 @@ import 'package:anchor_vendor/media_query.dart';
 import 'package:anchor_vendor/screen/NidCard/controller/nidController.dart';
 import 'package:anchor_vendor/screen/license/License.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../appbar.dart';
 import 'component/NidBody.dart';
@@ -38,9 +39,31 @@ class NidCard extends StatelessWidget {
                 if(nidController.isFrontTaken.value && nidController.isBackTaken.value){
                   int responseCode = await nidController.uploadFiles();
                   if(responseCode == 200){
+                    Fluttertoast.showToast(
+                        msg: "NID files uploaded.",
+                        textColor: Colors.black,
+                        backgroundColor: Colors.green,
+                        gravity: ToastGravity.BOTTOM,
+                        toastLength: Toast.LENGTH_SHORT,
+                        fontSize: 16.0);
                     Navigator.pushNamed(context, License.name);
+                  }else{
+                    Fluttertoast.showToast(
+                        msg: "Please try again.",
+                        textColor: Colors.black,
+                        backgroundColor: Colors.lightBlue,
+                        gravity: ToastGravity.BOTTOM,
+                        toastLength: Toast.LENGTH_SHORT,
+                        fontSize: 16.0);
                   }
                 }else{
+                  Fluttertoast.showToast(
+                      msg: "Please upload NID front/back image.",
+                      textColor: Colors.black,
+                      backgroundColor: Colors.lightBlue,
+                      gravity: ToastGravity.BOTTOM,
+                      toastLength: Toast.LENGTH_SHORT,
+                      fontSize: 16.0);
                   print(nidController.isFrontTaken.value);
                 }
               },

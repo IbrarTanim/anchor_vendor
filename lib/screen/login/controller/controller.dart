@@ -14,6 +14,13 @@ class LoginController extends GetxController {
     ans.value = !ans.value;
   }
 
+  //loading status
+  RxBool isLoading = false.obs;
+
+  changeLoadingStatus(){
+    isLoading.value = !isLoading.value;
+  }
+
   login(String mobile) async {
     int code = 0;
     try {

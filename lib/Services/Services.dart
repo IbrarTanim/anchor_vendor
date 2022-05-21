@@ -8,4 +8,6 @@ class Services {
       'http://anchorpanel.sameergroup.net/api/vendor/otp';
   static const String vendorFileUpload =
       'http://anchorpanel.sameergroup.net/api/vendor/uploadFile/';
+  static const String vendorGetProfile =
+      'http://anchorpanel.sameergroup.net/api/vendor/profile/';
 }

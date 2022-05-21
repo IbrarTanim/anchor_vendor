@@ -3,12 +3,14 @@
 import 'dart:io';
 
 import 'package:anchor_vendor/Appcolor.dart';
+import 'package:anchor_vendor/Model/keepUserInformation.dart';
 import 'package:anchor_vendor/TextStyle.dart';
 import 'package:anchor_vendor/appbar.dart';
 import 'package:anchor_vendor/media_query.dart';
 import 'package:anchor_vendor/screen/cheakbook/Cheakbook.dart';
 import 'package:anchor_vendor/screen/license/controller/license_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 LicenseController licenseController = LicenseController();
@@ -84,8 +86,31 @@ class License extends StatelessWidget {
                             .licenseImageFile.value.isNotEmpty) {
                           int resCode = await licenseController.uploadFile();
                           if (resCode == 200) {
+                            Fluttertoast.showToast(
+                                msg: "License uploaded.",
+                                textColor: Colors.black,
+                                backgroundColor: Colors.green,
+                                gravity: ToastGravity.BOTTOM,
+                                toastLength: Toast.LENGTH_SHORT,
+                                fontSize: 16.0);
                             Navigator.pushNamed(context, CheakBook.name);
+                          }else{
+                            Fluttertoast.showToast(
+                                msg: "Please try again.",
+                                textColor: Colors.black,
+                                backgroundColor: Colors.lightBlue,
+                                gravity: ToastGravity.BOTTOM,
+                                toastLength: Toast.LENGTH_SHORT,
+                                fontSize: 16.0);
                           }
+                        }else{
+                          Fluttertoast.showToast(
+                              msg: "Please upload license image.",
+                              textColor: Colors.black,
+                              backgroundColor: Colors.lightBlue,
+                              gravity: ToastGravity.BOTTOM,
+                              toastLength: Toast.LENGTH_SHORT,
+                              fontSize: 16.0);
                         }
                       },
                       child: Container(
@@ -113,6 +138,7 @@ class License extends StatelessWidget {
                       onTap: () {
                         // add operation which u want
                         //skif button
+                        //print(KeepuserInfromation.captain_id + " ------ " + KeepuserInfromation.auth_token);
                         Navigator.pushNamed(context, CheakBook.name);
                       },
                       child: Container(

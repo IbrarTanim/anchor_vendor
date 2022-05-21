@@ -1,11 +1,19 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, duplicate_ignore, file_names
 
+import 'dart:io';
+
 import 'package:anchor_vendor/Appcolor.dart';
 import 'package:anchor_vendor/TextStyle.dart';
 import 'package:anchor_vendor/appbar.dart';
 import 'package:anchor_vendor/media_query.dart';
 import 'package:anchor_vendor/screen/NewDashboard/NewDashBoard.dart';
+import 'package:anchor_vendor/screen/cheakbook/controller/checkbook_controller.dart';
+import 'package:anchor_vendor/screen/congratution/Congratuation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+
+ChequeBookController chequeBookController = ChequeBookController();
 
 class CheakBook extends StatelessWidget {
   const CheakBook({Key? key}) : super(key: key);
@@ -50,8 +58,18 @@ class CheakBook extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Image(
-                      image: AssetImage('assets/nidimage3.png'),
+                    child: InkWell(
+                      onTap: () {
+                        chequeBookController.chequeImageCapture();
+                      },
+                      child: Obx(() =>
+                          chequeBookController.chequeImageFile.value.isEmpty
+                              ? Image(
+                                  image: AssetImage('assets/nidimage3.png'),
+                                )
+                              : Image.file(File(chequeBookController
+                                  .chequeImageFile.value
+                                  .toString()))),
                     ),
                   ),
                   /**
@@ -60,9 +78,40 @@ class CheakBook extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: InkWell(
-                      onTap: () {
+                      onTap: () async {
                         // add operation which u want
                         // Navigator.pushNamed(context, Congratutation.name);
+                        // add operation which u want
+                        if (chequeBookController
+                            .chequeImageFile.value.isNotEmpty) {
+                          int resCode = await chequeBookController.uploadFile();
+                          if (resCode == 200) {
+                            Fluttertoast.showToast(
+                                msg: "Cheque uploaded.",
+                                textColor: Colors.black,
+                                backgroundColor: Colors.green,
+                                gravity: ToastGravity.BOTTOM,
+                                toastLength: Toast.LENGTH_SHORT,
+                                fontSize: 16.0);
+                            Navigator.pushNamed(context, Congratutation.name);
+                          }else{
+                            Fluttertoast.showToast(
+                                msg: "Please try again.",
+                                textColor: Colors.black,
+                                backgroundColor: Colors.lightBlue,
+                                gravity: ToastGravity.BOTTOM,
+                                toastLength: Toast.LENGTH_SHORT,
+                                fontSize: 16.0);
+                          }
+                        }else{
+                          Fluttertoast.showToast(
+                              msg: "Please upload cheque image.",
+                              textColor: Colors.black,
+                              backgroundColor: Colors.lightBlue,
+                              gravity: ToastGravity.BOTTOM,
+                              toastLength: Toast.LENGTH_SHORT,
+                              fontSize: 16.0);
+                        }
                       },
                       child: Container(
                         width: MediaQuerypage.screenWidth,

@@ -1,11 +1,13 @@
 // ignore_for_file: file_names, non_constant_identifier_names
 
+import 'package:anchor_vendor/Model/default_success_response.dart';
 import 'package:anchor_vendor/Model/keepUserInformation.dart';
 import 'package:anchor_vendor/Services/Services.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http_parser/http_parser.dart';
 
 class NidController extends GetxController {
   //to control tab : true => front nid, false => back
@@ -59,22 +61,35 @@ class NidController extends GetxController {
 
   //upload files to server
   uploadFiles() async {
-
     int responseCode = 0;
 
-    try{
+    try {
       Dio dio = Dio();
-      dio.options.headers["Authorization"] = "Bearer ${KeepuserInfromation.auth_token}";
+      //dio.options.headers["Authorization"] = "Bearer ${KeepuserInfromation.auth_token}";
       Response response;
-      response = await dio.post(Services.vendorFileUpload + KeepuserInfromation.captain_id, queryParameters: {
-        'nid_front' : MultipartFile.fromFile(nid_front_imageFile.value, filename: nid_front_imageFileName.value),
-        'nid_back' : MultipartFile.fromFile(nid_front_imageFile.value, filename: nid_front_imageFileName.value)
+      var formData = FormData.fromMap({
+        'nid_front': await MultipartFile.fromFile(nid_front_imageFile.value,
+            filename: nid_front_imageFileName.value,
+            contentType: MediaType('image', 'png')),
+        'nid_back': await MultipartFile.fromFile(nid_front_imageFile.value,
+            filename: nid_front_imageFileName.value,
+            contentType: MediaType('image', 'png'))
       });
+      response = await dio.post(
+          Services.vendorFileUpload + KeepuserInfromation.captain_id,
+          data: formData,
+          options: Options(headers: {
+            "accept": "*/*",
+            "Authorization": "Bearer ${KeepuserInfromation.auth_token}",
+            "Content-Type": "multipart/form-data"
+          }));
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
+        //var responseConverted = DefaultSuccessResponse.fromJson(response.data);
+        print(response.statusCode);
         responseCode = response.statusCode!;
       }
-    }catch (e) {
+    } catch (e) {
       print("Error find in http file  ${e.toString()}");
     }
 

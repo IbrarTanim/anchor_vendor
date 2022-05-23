@@ -47,7 +47,24 @@ class UserInformation extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   //mainAxisAlignment: ,
                   children: [
-                    Center(child: Image(image: AssetImage('assets/user.png'))),
+                    Center(
+                        child: Container(
+                      height: 200,
+                      width: 200,
+                      child: Obx(() => userController.isUpdated.value
+                          ? userController.data.image != null &&
+                                  userController.data.image
+                                      .toString()
+                                      .isNotEmpty
+                              ? CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(userController.data.image))
+                              : CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage('assets/user.png'))
+                          : CircleAvatar(
+                              backgroundImage: AssetImage('assets/user.png'))),
+                    )),
                     SizedBox(
                       height: MediaQuerypage.screenHeight! * 0.02,
                     ),
@@ -118,25 +135,29 @@ class UserInformation extends StatelessWidget {
                         style: Textstyle.userinfromation_imageheader,
                       ),
                     ),
-                    Obx(() => userController.isUpdated.value
-                        ? userController.data.nidFront != null &&
-                                userController.data.nidFront
-                                    .toString()
-                                    .isNotEmpty
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child:
-                                    Image.network(userController.data.nidFront),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child:
-                                    Image(image: AssetImage('assets/nid.jpg')),
-                              )
-                        : Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Image(image: AssetImage('assets/nid.jpg')),
-                          )),
+                    SizedBox(
+                      height: 300.0,
+                      width: MediaQuerypage.screenWidth,
+                      child: Obx(() => userController.isUpdated.value
+                          ? userController.data.nidFront != null &&
+                                  userController.data.nidFront
+                                      .toString()
+                                      .isNotEmpty
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child:
+                                      Image.network(userController.data.nidFront),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child:
+                                      Image(image: AssetImage('assets/nid.jpg')),
+                                )
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Image(image: AssetImage('assets/nid.jpg')),
+                            )),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(
                           top: 20,
@@ -146,25 +167,29 @@ class UserInformation extends StatelessWidget {
                         style: Textstyle.userinfromation_imageheader,
                       ),
                     ),
-                    Obx(() => userController.isUpdated.value
-                        ? userController.data.nidBack != null &&
-                                userController.data.nidBack
-                                    .toString()
-                                    .isNotEmpty
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child:
-                                    Image.network(userController.data.nidBack),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child:
-                                    Image(image: AssetImage('assets/nid.jpg')),
-                              )
-                        : Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Image(image: AssetImage('assets/nid.jpg')),
-                          )),
+                    SizedBox(
+                      height: 300,
+                      width: MediaQuerypage.screenWidth,
+                      child: Obx(() => userController.isUpdated.value
+                          ? userController.data.nidBack != null &&
+                                  userController.data.nidBack
+                                      .toString()
+                                      .isNotEmpty
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child:
+                                      Image.network(userController.data.nidBack),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child:
+                                      Image(image: AssetImage('assets/nid.jpg')),
+                                )
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Image(image: AssetImage('assets/nid.jpg')),
+                            )),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(
                           top: 20,
@@ -174,25 +199,29 @@ class UserInformation extends StatelessWidget {
                         style: Textstyle.userinfromation_imageheader,
                       ),
                     ),
-                    Obx(() => userController.isUpdated.value
-                        ? userController.data.license != null &&
-                                userController.data.license
-                                    .toString()
-                                    .isNotEmpty
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child:
-                                    Image.network(userController.data.license),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child:
-                                    Image(image: AssetImage('assets/nid.jpg')),
-                              )
-                        : Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Image(image: AssetImage('assets/nid.jpg')),
-                          )),
+                    SizedBox(
+                      height: 300,
+                      width: MediaQuerypage.screenWidth,
+                      child: Obx(() => userController.isUpdated.value
+                          ? userController.data.license != null &&
+                                  userController.data.license
+                                      .toString()
+                                      .isNotEmpty
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child:
+                                      Image.network(userController.data.license),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child:
+                                      Image(image: AssetImage('assets/nid.jpg')),
+                                )
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Image(image: AssetImage('assets/nid.jpg')),
+                            )),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(
                           top: 20,
@@ -202,23 +231,27 @@ class UserInformation extends StatelessWidget {
                         style: Textstyle.userinfromation_imageheader,
                       ),
                     ),
-                    Obx(() => userController.isUpdated.value
-                        ? userController.data.cheque != null &&
-                                userController.data.cheque.toString().isNotEmpty
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child:
-                                    Image.network(userController.data.cheque),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child:
-                                    Image(image: AssetImage('assets/nid.jpg')),
-                              )
-                        : Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Image(image: AssetImage('assets/nid.jpg')),
-                          )),
+                    SizedBox(
+                      height: 300,
+                      width: MediaQuerypage.screenWidth,
+                      child: Obx(() => userController.isUpdated.value
+                          ? userController.data.cheque != null &&
+                                  userController.data.cheque.toString().isNotEmpty
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child:
+                                      Image.network(userController.data.cheque),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child:
+                                      Image(image: AssetImage('assets/nid.jpg')),
+                                )
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Image(image: AssetImage('assets/nid.jpg')),
+                            )),
+                    ),
                   ],
                 ),
               ),

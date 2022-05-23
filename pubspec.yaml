@@ -48,8 +48,13 @@ dependencies:
   date_time_picker: ^2.1.0
   fluttertoast: ^8.0.9
   http: ^0.13.4
+  #abstract sql database
+  floor: ^1.2.0
+  faker: ^2.0.0
 
 dev_dependencies:
+  floor_generator: ^1.2.0
+  build_runner: ^2.1.4
   flutter_test:
     sdk: flutter
 

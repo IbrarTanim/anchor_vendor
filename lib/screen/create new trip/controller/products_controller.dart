@@ -11,8 +11,10 @@ class ProductsController extends GetxController{
   late List<Datum> datum;
 
   RxBool isUpdated = false.obs;
+  //RxList<Datum> allProducts = <Datum>[].obs;
+
   updateValue(){
-    isUpdated.value = !isUpdated.value;
+    isUpdated.value = true;
   }
 
   fetchProductData() async{
@@ -32,4 +34,5 @@ class ProductsController extends GetxController{
       print("Error find in http file  ${e.toString()}");
     }
   }
+
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, equal_keys_in_map
 
 import 'package:anchor_vendor/Appcolor.dart';
+import 'package:anchor_vendor/Services/floor_services/floor_database.dart';
 import 'package:anchor_vendor/screen/Apphome/dashboad.dart';
 import 'package:anchor_vendor/screen/Condition/condition.dart';
 import 'package:anchor_vendor/screen/EnterShipquentity/EnterShipyourQuentity.dart';
@@ -39,18 +40,36 @@ import 'package:flutter/services.dart';
 import 'screen/Inbox/inbox.dart';
 import 'screen/building succesfull/buildingsuccesful.dart';
 import 'screen/registation/registation.dart';
+import 'package:floor/floor.dart';
+import 'package:anchor_vendor/Services/floor_services/floor_database.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.black, // navigation bar color
+      statusBarColor: Appcolor.lightBlue,
+      statusBarIconBrightness: Brightness.dark // status bar color
+  ));
+  final database = await $FloorMyFloorDatabase
+      .databaseBuilder('flutter_database.db')
+      .build();
+
+  runApp(MyApp(database: database));
+}
+/*void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.black, // navigation bar color
       statusBarColor: Appcolor.lightBlue,
       statusBarIconBrightness: Brightness.dark // status bar color
       ));
   runApp(const MyApp());
-}
+}*/
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  //const MyApp({Key? key, this.database}) : super(key: key);
+  MyFloorDatabase database;
+
+  MyApp({required this.database});
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +104,7 @@ class MyApp extends StatelessWidget {
         NewDashboard.name: (context) => NewDashboard(),
         Trip.name: (context) => Trip(),
         Goods.name: (context) => Goods(),
-        CreateNewTrip.name: (context) => CreateNewTrip(),
+        CreateNewTrip.name: (context) => CreateNewTrip(database: database,),
         NewHome.name: (conetex) => NewHome(),
         Tracking.name: (context) => Tracking(),
         UserInformation.name: (context) => UserInformation(),

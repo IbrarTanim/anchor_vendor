@@ -1,17 +1,23 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_brace_in_string_interps
 
 import 'package:anchor_vendor/Appcolor.dart';
+import 'package:anchor_vendor/Services/floor_services/floor_database.dart';
 import 'package:anchor_vendor/TextStyle.dart';
 import 'package:anchor_vendor/media_query.dart';
+import 'package:anchor_vendor/screen/create%20new%20trip/Model/SavedProductInfo.dart';
 import 'package:anchor_vendor/screen/create%20new%20trip/Model/itemsName.dart';
+import 'package:anchor_vendor/screen/create%20new%20trip/Model/post_products_model.dart';
 import 'package:anchor_vendor/screen/create%20new%20trip/component/seconddialog.dart';
+import 'package:anchor_vendor/screen/create%20new%20trip/controller/create_trip_controller.dart';
 import 'package:anchor_vendor/screen/create%20new%20trip/controller/products_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 ProductsController productsController = ProductsController();
+//CreateTripController createTripController = CreateTripController();
 
-showaDialog(BuildContext context) {
+showaDialog(BuildContext context, MyFloorDatabase database) {
+
   //fetch data
   productsController.fetchProductData();
 
@@ -57,20 +63,29 @@ showaDialog(BuildContext context) {
                         itemCount: productsController.datum.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
+                            onTap: () {
+                              SavedProductInfo.productId = productsController.datum[index].id;
+                              SavedProductInfo.productName = productsController.datum[index].name;
+                              print(SavedProductInfo.productId.toString() + " - - product page");
+                              print(SavedProductInfo.productName + " - - product page");
+                              secondshowaDialog(context, database);
+                            },
                             leading: Text((index + 1).toString()),
                             title: Text(productsController.datum[index].name),
                             trailing: Checkbox(
                               checkColor: Colors.white,
                               activeColor: Appcolor.lightBlue,
-                              value: false,
+                              value: true,
                               onChanged: (value) {},
                             ),
                           );
                         },
                       ),
                     )
-                  : SizedBox(height: 100.0,)),
-              InkWell(
+                  : SizedBox(
+                      height: 100.0,
+                    )),
+              /*InkWell(
                 onTap: () async {
                   secondshowaDialog(context);
                 },
@@ -87,7 +102,7 @@ showaDialog(BuildContext context) {
                     style: Textstyle.botton,
                   )),
                 ),
-              ),
+              ),*/
             ],
           ),
         ),

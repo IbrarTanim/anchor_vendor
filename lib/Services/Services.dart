@@ -16,4 +16,6 @@ class Services {
       'http://anchorpanel.sameergroup.net/api/vendor/products';
   static const String vendorGetPorts =
       'http://anchorpanel.sameergroup.net/api/vendor/ports';
+  static const String vendorCreateTrip =
+      'http://anchorpanel.sameergroup.net/api/vendor/trips';
 }

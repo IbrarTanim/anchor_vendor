@@ -5,15 +5,20 @@ import 'package:anchor_vendor/Services/floor_services/floor_database.dart';
 import 'package:anchor_vendor/Services/floor_services/models/new_products_model.dart';
 import 'package:anchor_vendor/TextStyle.dart';
 import 'package:anchor_vendor/media_query.dart';
+import 'package:anchor_vendor/screen/create%20new%20trip/Model/SavedProductInfo.dart';
+import 'package:anchor_vendor/screen/create%20new%20trip/component/invoice_dialog.dart';
 import 'package:anchor_vendor/screen/create%20new%20trip/component/loadingPost.dart';
 import 'package:anchor_vendor/screen/create%20new%20trip/component/showalert.dart';
 import 'package:anchor_vendor/screen/create%20new%20trip/controller/create_trip_controller.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
 
 CreateTripController createTripController = CreateTripController();
+TextEditingController shipNameController = TextEditingController();
 
 class CreateNewTrip extends StatelessWidget {
   MyFloorDatabase database;
@@ -47,6 +52,27 @@ class CreateNewTrip extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuerypage.screenHeight! * 0.01,
+                        bottom: MediaQuerypage.screenHeight! * 0.01,
+                      ),
+                      child: TextFormField(
+                        controller: shipNameController,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          fillColor: Color(0xFFE9E9E9),
+                          filled: true,
+                          hintText: 'Ship Name',
+                          // errorText: 'Enter your mobile number'
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           vertical: MediaQuerypage.safeBlockVertical! * 2),
@@ -90,12 +116,8 @@ class CreateNewTrip extends StatelessWidget {
                               leading: Text((index + 1).toString()),
                               title:
                                   Text(products[index].productName.toString()),
-                              /*trailing: Checkbox(
-                                checkColor: Colors.white,
-                                activeColor: Appcolor.lightBlue,
-                                value: true,
-                                onChanged: (value) {},
-                              ),*/
+                              trailing: Text(
+                                  "${products[index].quantity}${products[index].bundle == 0 ? "M/T" : products[index].bundle == 1 ? "KGs" : products[index].bundle == 2 ? "bundle" : "other"}(${products[index].state == 0 ? "bulk" : products[index].state == 1 ? "bag" : "bundle"})"),
                             );
                           },
                         );
@@ -163,7 +185,16 @@ class CreateNewTrip extends StatelessWidget {
                         //   }
                         //   return true;
                         // },
-                        onChanged: (val) => print(val),
+                        onChanged: (val) {
+                          var newDate = DateTime.parse(val);
+                          //DateFormat('yyyy-MM-dd').format(val);
+                          SavedProductInfo.date =
+                              "${newDate.year}-${newDate.month}-${newDate.day}";
+                          SavedProductInfo.time =
+                              "${newDate.hour}:${newDate.minute}:${newDate.second}";
+                          print("Date: ${SavedProductInfo.date}");
+                          print("Time: ${SavedProductInfo.time}");
+                        },
                         // validator: (val) {
                         //   print(val);
                         //   return null;
@@ -171,12 +202,33 @@ class CreateNewTrip extends StatelessWidget {
                         //onSaved: (val) => print(val),
                       ),
                     ),
-                    SizedBox(height: 100),
+                    SizedBox(height: 50),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           vertical: MediaQuerypage.safeBlockVertical! * 2),
                       child: InkWell(
-                        onTap: () async {},
+                        onTap: () {
+                          if (SavedProductInfo.loadingPortId != -1 &&
+                              SavedProductInfo.unloadingPortId != -1 &&
+                              SavedProductInfo.date.isNotEmpty &&
+                              SavedProductInfo.time.isNotEmpty &&
+                              shipNameController.text.toString() != null &&
+                              shipNameController.text.toString().isNotEmpty) {
+                            //TODO show dialog of invoice
+                            SavedProductInfo.shipName =
+                                shipNameController.text.toString();
+                            createTripController.checkVar = 1;
+                            showInvoiceDialog(context, database, createTripController);
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Please provide all information first.",
+                                textColor: Colors.black,
+                                backgroundColor: Colors.lightBlue,
+                                gravity: ToastGravity.BOTTOM,
+                                toastLength: Toast.LENGTH_SHORT,
+                                fontSize: 16.0);
+                          }
+                        },
                         child: Container(
                           width: MediaQuerypage.screenWidth,
                           height: MediaQuerypage.screenHeight! / 16,
@@ -188,7 +240,7 @@ class CreateNewTrip extends StatelessWidget {
                           ),
                           child: Center(
                               child: Text(
-                            'Submit',
+                            'Next',
                             style: Textstyle.botton,
                           )),
                         ),

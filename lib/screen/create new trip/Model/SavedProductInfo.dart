@@ -5,7 +5,10 @@ class SavedProductInfo{
   static int state = -1;
   static int bundle = -1;
   static int loadingPortId = -1;
+  static String loadingPortName = '';
   static int unloadingPortId = -1;
-  static var date;
-  static var time;
+  static String unloadingPortName = '';
+  static String date = '';
+  static String time = '';
+  static String shipName = '';
 }

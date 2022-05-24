@@ -98,6 +98,7 @@ Padding port(BuildContext context, String type) {
                       onTap: () {
                         if(type == "loading"){
                           SavedProductInfo.loadingPortId = portsController.allPorts[index].id;
+                          SavedProductInfo.loadingPortName = portsController.allPorts[index].name;
                           Fluttertoast.showToast(
                               msg: "Loading port: ${portsController.allPorts[index].name} saved.",
                               textColor: Colors.black,
@@ -108,6 +109,7 @@ Padding port(BuildContext context, String type) {
                           Navigator.pop(context);
                         }else{
                           SavedProductInfo.unloadingPortId = portsController.allPorts[index].id;
+                          SavedProductInfo.unloadingPortName = portsController.allPorts[index].name;
                           Fluttertoast.showToast(
                               msg: "Unloading port: ${portsController.allPorts[index].name} saved.",
                               textColor: Colors.black,

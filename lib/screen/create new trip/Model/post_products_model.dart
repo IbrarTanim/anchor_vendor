@@ -30,14 +30,12 @@ class PostProductModel {
 class Products {
   Products({
     required this.product_id,
-    required this.productName,
     required this.state,
     required this.bundle,
     required this.quantity,
   });
 
   int product_id;
-  String productName;
   num state;
   num bundle;
   num quantity;

@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 class Trip extends StatelessWidget {
   const Trip({Key? key}) : super(key: key);
   static const name = 'trip';
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,7 +21,10 @@ class Trip extends StatelessWidget {
           elevation: 0,
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: Text('Trip',style: Textstyle.black,),
+          title: Text(
+            'Trip',
+            style: Textstyle.black,
+          ),
           backgroundColor: Appcolor.lightBlue,
           // leading: IconButton(
           //   onPressed: () {
@@ -53,7 +57,7 @@ class Trip extends StatelessWidget {
                   ),
                   child: Center(
                       child: Text(
-                    'Creat New Trip',
+                    'Create New Trip',
                     style: Textstyle.botton,
                   )),
                 ),
@@ -71,7 +75,7 @@ class Trip extends StatelessWidget {
                   width: MediaQuerypage.screenWidth,
                   height: MediaQuerypage.screenHeight! / 16,
                   decoration: BoxDecoration(
-                    color:Appcolor.lightBlue,
+                    color: Appcolor.lightBlue,
                     //border: Border.all(color: Color(0xFFB1B1B1)),
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
@@ -89,7 +93,7 @@ class Trip extends StatelessWidget {
                   vertical: MediaQuerypage.safeBlockVertical! * 2),
               child: InkWell(
                 onTap: () async {
-                 Navigator.pushNamed(context, TripHistoy.name);
+                  Navigator.pushNamed(context, TripHistoy.name);
                 },
                 child: Container(
                   width: MediaQuerypage.screenWidth,
